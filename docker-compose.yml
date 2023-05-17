@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+
+    mongodb:
+        image : mongo
+        restart: always
+        ports:
+            - "27017:27017"
+
+    # https://hub.docker.com/r/bitnami/mongodb
+
+    mongodbrs:
+        image: candis/mongo-replica-set
+        ports:
+            - "27017:27017"
+
+    rabbitmq:
+        image: heidiks/rabbitmq-delayed-message-exchange:latest
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+
+    redis:
+        image: redis
+        command: "redis-server --appendonly yes"
+        ports:
+            - "6379:6379"
+
+    zookeeper:
+        image: confluentinc/cp-zookeeper:7.0.0
+        container_name: zookeeper
+        ports:
+            - "2181:2181"
+        environment:
+            - ZOOKEEPER_CLIENT_PORT=2181
+            - ZOOKEEPER_TICK_TIME=2000
+
+    kafka:
+        image: confluentinc/cp-kafka:7.0.0
+        container_name: kafka
+        ports:
+            - "9092:9092"
+        depends_on:
+            - zookeeper
+        environment:
+            - KAFKA_BROKER_ID=1
+            - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+            - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
+            - KAFKA_AUTO_CREATE_TOPICS_ENABLE=false
+        volumes:
+            - ./kafka-data:/var/lib/kafka/data
+
+    myapp:
+        container_name: myapp
+        build: .
+        entrypoint: "./gogen_pubsub myapp"
+        ports:
+            - "8080:8080"

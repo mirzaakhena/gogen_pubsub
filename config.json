@@ -1,0 +1,7 @@
+{
+  "servers": {
+    "appClient": {
+      "address": ":8000"
+    }
+  }
+}
