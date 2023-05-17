@@ -13,7 +13,7 @@ The application consist of two parts
 1. Client : Has a restapi interface to invoke the Redis PubSub or Kafka publisher
 2. Server : Has a Redis PubSub or Kafka server to consume the request, process it and then return back to client (Redis PubSub or Kafka)
 
-![gogen grpc architecture](https://github.com/mirzaakhena/gogen_grpc_graphql/blob/main/gogen_pubsub_architecture.png)
+![gogen pubsub architecture](https://github.com/mirzaakhena/gogen_pubsub/blob/main/gogen_pubsub_architecture.png)
 
 ## Folder structure
 ```text
@@ -45,7 +45,7 @@ gogen_pubsub
 1. After you git clone it, make sure to run the `go mod tidy` to download the dependency
 2. Run the server application by `go run main.go server`
 3. Run the client application by `go run main.go client`
-4. invoke this api with curl, postman or use the file `http_runmessagesend.http` under `domain_demogrpc/controller/restapi`
+4. invoke this api with curl, postman or use the file `http_runmessagesend.http` under `domain_demo/controller/restapi`
 
     ```
     POST http://localhost:8000/api/v1/runmessagesend
