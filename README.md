@@ -95,7 +95,7 @@ gogen_pubsub
     >>> hello
     ```
 
-## How to switch technology between gRPC and GraphQL
+## How to switch technology between Redis Pubsub and Kafka
 
 For the server you may comment / uncomment this part (`application/app_server.go`)
 ```
